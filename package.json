@@ -1,0 +1,23 @@
+{
+  "name": "trijha-backend",
+  "version": "1.0.0",
+  "description": "Backend using Express, firebase and smtp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "author": "Harshit Verma (Ha3561)",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "firebase": "^10.13.2",
+    "firebase-admin": "^12.5.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
