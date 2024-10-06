@@ -18,7 +18,7 @@ const db = admin.firestore();
 app.use(morgan('dev'));
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Replace with your frontend URL
+  origin: ['http://localhost:3000', 'https://trijha-frontend.vercel.app'], // Replace with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
   credentials: true // Enable credentials if needed
 }));
