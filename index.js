@@ -107,18 +107,17 @@ app.get('/cart', async (req, res) => {
 
 // POST route to update the cart
 app.post('/cart/update', async (req, res) => {
-  const { cartItems, idToken } = req.body;
+  const { cartItems } = req.body;
+  const idToken = req.headers.authorization?.split(' ')[1]; // Extract token from Authorization header
 
   if (!idToken) {
     return res.status(401).json({ error: 'ID token is required' });
   }
 
   try {
-    // Verify ID token
     const decodedToken = await admin.auth().verifyIdToken(idToken);
     const uid = decodedToken.uid;
 
-    // Fetch user document from the 'users' collection
     const userRef = db.collection('users').doc(uid);
     const userDoc = await userRef.get();
 
@@ -126,9 +125,8 @@ app.post('/cart/update', async (req, res) => {
       return res.status(404).json({ error: 'User document does not exist' });
     }
 
-    // Update the cart in the user document
     await userRef.update({
-      cart: cartItems // Update the cart with new quantities
+      cart: admin.firestore.FieldValue.arrayUnion(...cartItems) // Append new cart items to existing cart
     });
 
     res.json({ message: 'Cart updated successfully' });
@@ -137,6 +135,7 @@ app.post('/cart/update', async (req, res) => {
     res.status(500).json({ error: 'Failed to update cart' });
   }
 });
+
 
 // POST route to save checkout form details
 app.post('/save-details', async (req, res) => {
